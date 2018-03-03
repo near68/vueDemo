@@ -1,5 +1,5 @@
 <template>
-    <h1>{{ msg }}</h1>
+    <router-link to="newcontact"><h1>{{ msg }}</h1></router-link>
 </template>
 <script>
 export default {
@@ -11,8 +11,11 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 h1 {
   font-weight: normal; 
+}
+a {
+  color: #42b983;
 }
 </style>
