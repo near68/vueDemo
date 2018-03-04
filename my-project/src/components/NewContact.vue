@@ -11,7 +11,7 @@
     </el-select>
     <el-button  class="btn-auto" @click="create" type="success">创建</el-button>
     <template>
-      <el-table :data="tabledata" align="left">
+      <el-table :data="tabledata" align="left" style="width: 100%">
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="age" label="年龄"></el-table-column>
         <el-table-column prop="sex" label="性别"></el-table-column>
