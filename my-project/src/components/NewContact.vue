@@ -1,12 +1,12 @@
 <template>
   <el-row>
-    <el-col :xs="24" :sm="18" :md="14" :lg="10" class="col">
+    <el-col :xs="24" :sm="18" :md="14" :lg="10" id="main">
     <label>姓名：</label>  
     <el-input v-model="info.name" placeholder="请输入姓名"></el-input>
     <label>年龄：</label>
     <el-input v-model="info.age" placeholder="请输入年龄"></el-input>
     <label>性别：</label>
-    <el-select v-model="info.sex" placeholder="请选择">
+    <el-select v-model="info.sex" placeholder="请选择" id="select">
       <el-option v-for="item in options" :key="item" :value="item"></el-option><!-- 这里的key官方推荐在v-for时使用，不然会警告，但不影响使用 -->
     </el-select>
     <el-button  class="btn-auto" @click="create" type="success">创建</el-button>
@@ -60,7 +60,7 @@ export default {
 }
 </script>
 <style>
-  .col{
+  #main{
       float: none;
       margin: 0 auto;
   }
