@@ -1,8 +1,6 @@
 <template>
   <div class="hello">
-    <h1>{{ msg }}</h1>
-    <button @click="seachbook">seach</button>
-    <p>{{books}}</p>
+    <router-link to="shoppingcart"><h1>{{ msg }}</h1></router-link>
   </div>
 </template>
 
@@ -11,22 +9,14 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome',
-      books: ''
-    }
-  },
-  methods: {
-    seachbook: function(){
-      this.axios.get('./static/test.json').then(response=>
-        this.books = response.data.title
-      )
+      msg: 'to shoppingCart'
     }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style scoped>
 h1, h2 {
   font-weight: normal;
 }
