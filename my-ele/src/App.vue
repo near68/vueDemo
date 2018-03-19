@@ -1,23 +1,45 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <v-header></v-header><!--header是和HTML5原生调取，同名会导致错误-->
+    <div class="tab">
+      <div class="tab-item"><router-link to="/good">菜单</router-link></div>
+      <div class="tab-item"><router-link to="/ratings">评价</router-link></div>
+      <div class="tab-item"><router-link to="/detail">详细</router-link></div>
+    </div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import header from "./components/header/header";
 export default {
-  name: 'App'
-}
+  components: {
+    "v-header": header
+  }
+};
 </script>
 
-<style>
+<style lang="less" scoped >
+@bgc: #ccc;
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  .tab {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    .tab-item {
+      flex: 1;
+      text-align: center;
+      a {
+        display: block;
+        font-size: 14px;
+        color: rgb(77, 85, 93);
+        &.router-link-active{
+          color: #007acc;
+        }
+      }
+      
+    }
+  }
 }
 </style>
