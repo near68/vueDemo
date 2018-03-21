@@ -14,5 +14,7 @@
 </script>
 
 <style>
-
+.detail{
+  background-color: blueviolet;
+}
 </style>

@@ -4,13 +4,15 @@ import HelloWorld from '@/components/HelloWorld'
 import goods from '@/components/goods/goods'
 import ratings from '@/components/ratings/ratings'
 import detail from '@/components/detail/detail'
+
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/',
-      component: HelloWorld
+      component: HelloWorld,
     },
     {
       path: '/good',

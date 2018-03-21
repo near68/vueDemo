@@ -6,16 +6,44 @@
       <div class="tab-item"><router-link to="/ratings">评价</router-link></div>
       <div class="tab-item"><router-link to="/detail">详细</router-link></div>
     </div>
-    <router-view/>
+    <transition :name="transition">  
+      <router-view class="child-view"></router-view>  
+    </transition> 
   </div>
 </template>
 
 <script>
 import header from "./components/header/header";
+// import jsonp from "jsonp";
 export default {
+  data() {
+    return {
+      transition: "slide-left"
+    };
+  },
   components: {
     "v-header": header
-  }
+  },
+  methods: {},
+  created() {
+    this.axios
+      .get("./static/data.json")
+      .then(function(response) {
+        console.log(response.data.seller.name);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  },
+  watch: {
+    $route(to, from) {
+      const toDepth = to.path.split("/").length;
+      const fromDepth = from.path.split("/").length;
+      this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
+    }
+  },
+  
+  
 };
 </script>
 
@@ -34,12 +62,28 @@ export default {
         display: block;
         font-size: 14px;
         color: rgb(77, 85, 93);
-        &.router-link-active{
+        &.router-link-active {
           color: #007acc;
         }
       }
-      
     }
   }
+}
+.child-view {
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}
+.slide-left-enter,
+.slide-right-leave-active {
+  opacity: 0;
+  -webkit-transform: translate(30px, 0);
+  transform: translate(30px, 0);
+}
+.slide-left-leave-active,
+.slide-right-enter {
+  opacity: 0;
+  -webkit-transform: translate(-30px, 0);
+  transform: translate(-30px, 0);
 }
 </style>

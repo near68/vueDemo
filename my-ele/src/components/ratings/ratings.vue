@@ -14,5 +14,7 @@
 </script>
 
 <style>
-
+.ratings{
+  background-color: blanchedalmond;
+}
 </style>
