@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header></v-header><!--header是和HTML5原生调取，同名会导致错误-->
+    <v-header :seller="seller"></v-header><!--header是和HTML5原生调取，同名会导致错误-->
     <div class="tab">
       <div class="tab-item"><router-link to="/good">菜单</router-link></div>
       <div class="tab-item"><router-link to="/ratings">评价</router-link></div>
@@ -18,7 +18,8 @@ import header from "./components/header/header";
 export default {
   data() {
     return {
-      transition: "slide-left"
+      transition: "slide-left",
+      seller: {}
     };
   },
   components: {
@@ -28,9 +29,7 @@ export default {
   created() {
     this.axios
       .get("./static/data.json")
-      .then(function(response) {
-        console.log(response.data.seller.name);
-      })
+      .then( response => this.seller = response.data.seller  )
       .catch(function(error) {
         console.log(error);
       });
@@ -41,9 +40,7 @@ export default {
       const fromDepth = from.path.split("/").length;
       this.transitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
     }
-  },
-  
-  
+  }
 };
 </script>
 
@@ -52,7 +49,6 @@ export default {
 #app {
   .tab {
     display: flex;
-    width: 100%;
     height: 40px;
     line-height: 40px;
     .tab-item {

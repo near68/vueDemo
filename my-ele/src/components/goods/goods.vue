@@ -1,6 +1,5 @@
 <template>
   <div class="goods">
-    <p>{{ msg }}</p>
     <p>{{ count }}</p>
     <testa></testa>
     <testb></testb>
@@ -17,9 +16,9 @@ export default {
   name: "goods",
   data() {
     return {
-      msg: "Welcome to goods",
+
       shopname: []
-    };
+    }
   },
   components: {
     testa,
@@ -29,18 +28,6 @@ export default {
     count() {
       return this.$store.state.count;
     }
-  },
-  created() {
-    this.axios
-      .get("./static/data.json")
-      .then(res => {
-        res.data.goods.forEach(val => {
-          this.shopname.push(val.name);
-        })
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   }
 };
 </script>
