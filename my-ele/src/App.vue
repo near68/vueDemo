@@ -44,42 +44,38 @@ export default {
 };
 </script>
 
-<style lang="less" scoped >
+<style lang="stylus" scoped >
 @bgc: #ccc;
-#app {
-  .tab {
-    display: flex;
-    height: 40px;
-    line-height: 40px;
-    .tab-item {
-      flex: 1;
-      text-align: center;
-      a {
-        display: block;
-        font-size: 14px;
-        color: rgb(77, 85, 93);
-        &.router-link-active {
+#app
+  .tab
+    display: flex
+    height: 40px
+    line-height: 40px
+    .tab-item
+      flex: 1
+      text-align: center
+      a
+        display: block
+        font-size: 14px
+        color: rgb(77, 85, 93)
+        &.router-link-active 
           color: #007acc;
-        }
-      }
-    }
-  }
-}
-.child-view {
+
+.child-view 
   width: 100%;
   height: 100%;
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1)
+
 .slide-left-enter,
-.slide-right-leave-active {
+.slide-right-leave-active 
   opacity: 0;
-  -webkit-transform: translate(30px, 0);
+  -webkit-transform: translate(30px, 0)
   transform: translate(30px, 0);
-}
+
 .slide-left-leave-active,
-.slide-right-enter {
+.slide-right-enter 
   opacity: 0;
-  -webkit-transform: translate(-30px, 0);
-  transform: translate(-30px, 0);
-}
+  -webkit-transform: translate(-30px, 0)
+  transform: translate(-30px, 0)
+
 </style>

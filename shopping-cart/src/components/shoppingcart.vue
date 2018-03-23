@@ -82,16 +82,14 @@ export default {
 };
 </script>
 
-<style>
-section {
-  display: inline-block;
-  width: 50%;
-}
-@media screen and (max-width: 1200px) {
-  section {
-    width: 100%;
-    display: block;
-  }
-}
+<style lang="stylus" scoped>
+section
+  display: inline-block
+  width: 50%
+
+@media screen and (max-width: 1200px)
+  section 
+    width: 100%
+    display: block
 
 </style>
