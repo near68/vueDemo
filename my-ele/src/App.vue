@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-header :seller="seller"></v-header><!--header是和HTML5原生调取，同名会导致错误-->
-    <div class="tab">
+    <div class="tab border-1px">
       <div class="tab-item"><router-link to="/good">菜单</router-link></div>
       <div class="tab-item"><router-link to="/ratings">评价</router-link></div>
       <div class="tab-item"><router-link to="/detail">详细</router-link></div>
@@ -45,12 +45,13 @@ export default {
 </script>
 
 <style lang="stylus" scoped >
-@bgc: #ccc;
+@import './common/stylus/index.stylus';
 #app
   .tab
     display: flex
     height: 40px
     line-height: 40px
+    border-1px(#ccc)
     .tab-item
       flex: 1
       text-align: center
@@ -59,23 +60,7 @@ export default {
         font-size: 14px
         color: rgb(77, 85, 93)
         &.router-link-active 
-          color: #007acc;
+          color: rgb(230, 0, 0)
 
-.child-view 
-  width: 100%;
-  height: 100%;
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1)
-
-.slide-left-enter,
-.slide-right-leave-active 
-  opacity: 0;
-  -webkit-transform: translate(30px, 0)
-  transform: translate(30px, 0);
-
-.slide-left-leave-active,
-.slide-right-enter 
-  opacity: 0;
-  -webkit-transform: translate(-30px, 0)
-  transform: translate(-30px, 0)
 
 </style>

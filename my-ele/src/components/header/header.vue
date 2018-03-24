@@ -44,7 +44,6 @@ export default {
     .avatar
       display: inline-block
       vertical-align: top
-
     .content
       display: inline-block
       margin-left: 16px
@@ -82,5 +81,4 @@ export default {
           font-size: 10px
           font-weight: 200
           line-height: 12px
-
 </style>
