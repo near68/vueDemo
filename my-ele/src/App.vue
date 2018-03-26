@@ -8,7 +8,7 @@
     </div>
     <transition :name="transition">  
       <router-view class="child-view"></router-view>  
-    </transition> 
+    </transition>
   </div>
 </template>
 

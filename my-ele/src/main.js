@@ -3,11 +3,11 @@ import App from './App'
 import router from './router'
 import Vuex from 'vuex'
 import axios from 'axios'
+
 Vue.prototype.axios = axios
 
 Vue.use(Vuex)
 Vue.config.productionTip = false
-
 
 const store = new Vuex.Store({
   state: {
