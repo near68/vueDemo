@@ -19,7 +19,8 @@ export default {
   data() {
     return {
       transition: "slide-left",
-      seller: {}
+      seller: {},
+      goods: {}
     };
   },
   components: {
@@ -29,7 +30,7 @@ export default {
   created() {
     this.axios
       .get("./static/data.json")
-      .then( response => this.seller = response.data.seller  )
+      .then( response => this.seller = response.data.seller)
       .catch(function(error) {
         console.log(error);
       });
@@ -55,12 +56,12 @@ export default {
     .tab-item
       flex: 1
       text-align: center
-      a
+      & > a
         display: block
         font-size: 14px
         color: rgb(77, 85, 93)
         &.router-link-active 
-          color: rgb(230, 0, 0)
+          color: rgb(240, 20, 20)
 
 
 </style>

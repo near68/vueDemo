@@ -13,11 +13,11 @@
           {{ seller.description }}/{{ seller.deliveryTime }}分钟送达
         </div>
         <div class="supports" v-if="seller.supports">
-          <span class="icon" :class="iconMap[seller.supports[0].type]"></span><span class="text" v-text="seller.supports[1].description"></span>
+          <span class="icon" :class="iconClassMap[seller.supports[1].type]"></span><span class="text" v-text="seller.supports[1].description"></span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
-        <span class="count">{{seller.supports.length}}个</span><i class="iconfont icon-more" @click="detailshow =! detailshow"></i>
+      <div v-if="seller.supports" class="support-count" @click="detailshow =! detailshow">
+        <span class="count">{{seller.supports.length}}个</span><i class="iconfont icon-more"></i>
       </div>
     </div>
     <div class="bulletin">
@@ -32,7 +32,28 @@
       <div class="detail-box clearfix">
         <div class="content">
           <h1 class="name">{{ seller.name }}</h1>
-          <star :size="48" :score="seller.score"></star>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">优惠信息</div>
+            <div class="line"></div>
+          </div>
+          <ul v-if="seller.supports" class="supports">
+            <li v-for="(item, index) in seller.supports" class="support-item">
+              <span class="icon" :class="iconClassMap[seller.supports[index].type]"></span>
+              <span class="text">{{ seller.supports[index].description}}</span>
+            </li>
+          </ul>
+          <div class="title">
+            <div class="line"></div>
+            <div class="text">商家公告</div>
+            <div class="line"></div>
+          </div>
+          <div class="bulletin-content">
+            <div class="content-text">{{ seller.bulletin }}</div>
+          </div>
         </div>
       </div>
       <div class="detail-close" @click="detailshow =! detailshow">
@@ -42,7 +63,7 @@
   </div>
 </template>
 <script>
-import star from '../star/star'
+import star from "../star/star";
 export default {
   name: "v-header",
   props: {
@@ -50,12 +71,18 @@ export default {
   },
   data() {
     return {
-      detailshow: true
+      detailshow: false
     };
   },
   methods: {},
   created() {
-    this.iconMap = ["decrease", "discount", "special", "invoice", "guarantee"];
+    this.iconClassMap = [
+      "decrease",
+      "discount",
+      "special",
+      "invoice",
+      "guarantee"
+    ];
   },
   components: {
     star
@@ -149,7 +176,11 @@ export default {
             bg-img('decrease_1');
           }
 
-          &.discount, bg-img('discount_1'), &.guarantee {
+          &.discount {
+            bg-img('discount_1');
+          }
+
+          &.guarantee {
             bg-img('guarantee_1');
           }
 
@@ -231,6 +262,7 @@ export default {
     background-color: rgba(7, 17, 27, 0.8);
 
     .detail-box {
+      width: 100%;
       min-height: 100%;
 
       .content {
@@ -239,11 +271,95 @@ export default {
 
         .name {
           display: inline-block;
-          width 100%
+          width: 100%;
           font-size: 16px;
           font-weight: 700;
           line-height: 16px;
           text-align: center;
+        }
+
+        .star-wrapper {
+          margin: 16px 0 28px;
+          text-align: center;
+        }
+
+        .title {
+          display: flex;
+          width: 85%;
+          margin: 28px auto 24px;
+
+          .line {
+            flex: 1;
+            position: relative;
+            top: -6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+          }
+
+          .text {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 14px;
+            padding: 0 12px;
+          }
+        }
+
+        .supports {
+          width: 85%;
+          margin: 0 auto;
+          font-size: 0;
+
+          .support-item {
+            margin-bottom: 12px;
+            padding: 0 12px;
+
+            .icon {
+              display: inline-block;
+              width: 16px;
+              height: 16px;
+              background-size: 16px 16px;
+              background-repeat: no-repeat;
+              vertical-align: middle;
+
+              &.decrease {
+                bg-img('decrease_2');
+              }
+
+              &.discount {
+                bg-img('discount_2');
+              }
+
+              &.guarantee {
+                bg-img('guarantee_2');
+              }
+
+              &.invoice {
+                bg-img('invoice_2');
+              }
+
+              &.special {
+                bg-img('special_2');
+              }
+            }
+
+            .text {
+              margin-left: 6px;
+              font-size: 12px;
+              font-weight: 200;
+              line-height: 12px;
+              vertical-align: middle;
+            }
+          }
+        }
+
+        .bulletin-content {
+          width: 85%;
+          margin: 0 auto;
+          .content-text {
+            padding: 0 12px;
+            font-size: 12px;
+            font-weight: 200;
+            line-height: 24px;
+          }
         }
       }
     }
