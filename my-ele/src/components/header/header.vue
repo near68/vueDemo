@@ -21,8 +21,7 @@
       </div>
     </div>
     <div class="bulletin">
-      <span class="icon"></span>
-      <span class="text">{{ seller.bulletin }}</span>
+      <span class="icon"></span><span class="text">{{ seller.bulletin }}</span>
       <i class="iconfont icon-more" @click="detailshow =! detailshow"></i>
     </div>
     <div class="background">
@@ -214,12 +213,11 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
     background: rgba(7, 17, 27, 0.2);
-
     .icon {
       display: inline-block;
       width: 22px;
       height: 12px;
-      margin-top: 8px;
+      margin-top 8px;
       bg-img('bulletin');
       background-size: 22px 12px;
       vertical-align: top;
@@ -228,13 +226,13 @@ export default {
     .text {
       margin: 0 4px;
       font-size: 10px;
-      color: #fff;
       font-weight: 200;
-      vertical-align: top;
+      vertical-align:middle;
     }
 
     .icon-more {
       position: absolute;
+      top: 2px
       right: 12px;
       font-size: 10px;
       color: #fff;
