@@ -9,7 +9,6 @@
     <transition :name="transition">  
       <router-view class="child-view" :seller="seller"></router-view>  
     </transition>
-    <shopcart :seller="seller"></shopcart>
   </div>
 </template>
 
@@ -22,7 +21,6 @@ export default {
     return {
       transition: "slide-left",
       seller: {},
-      goods: {}
     }
   },
   components: {

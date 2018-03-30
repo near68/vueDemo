@@ -11,38 +11,45 @@
     </div>
     <div class="foods-wrapper" ref="foodsWrapper">
       <ul>
-        <li v-for="(gitem, gindex) in goods" class="food-list" ref="foodlisthook">
-          <h1 class="goodsname">{{ gitem.name }}</h1>
+        <li v-for="item in goods" class="food-list" ref="foodlisthook">
+          <h1 class="goodsname">{{ item.name }}</h1>
           <ul>
-            <li v-for="(item, index) in goods[gindex].foods" class="food-item">
-              <div class="img"><img :src="item.image" width="57" height="57"></div>
+            <li v-for="food in item.foods" class="food-item">
+              <div class="img"><img :src="food.icon" width="57" height="57"></div>
               <div class="food-content">
-                <h2 class="name">{{ item.name }}</h2>
-                <span v-show="item.description" class="description">{{ item.description }}</span>
+                <h2 class="name">{{ food.name }}</h2>
+                <span v-show="food.description" class="description">{{ food.description }}</span>
                 <div class="sellcontent">
-                  <span class="sellcount">月售{{ item.sellCount}}份</span>
-                  <span class="rating">好评率{{ item.rating }}%</span>
+                  <span class="sellcount">月售{{ food.sellCount}}份</span>
+                  <span class="rating">好评率{{ food.rating }}%</span>
                 </div>
                 <div class="price">
-                  <span class="nowprice">￥{{ item.price }}</span>
-                  <span v-show=" item.oldPrice" class="oldprice">￥{{ item.oldPrice}}</span>
+                  <span class="nowprice"><i>￥</i>{{ food.price }}</span>
+                  <span v-show=" food.oldPrice" class="oldprice">￥{{ food.oldPrice}}</span>
                 </div>
               </div>
+              <v-button class="good-button" :food="food"></v-button>
             </li>
           </ul>
         </li>
       </ul>
     </div>
+    <shopcart :selectFoods="selectFoods" :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice"></shopcart>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
+import button from "../button/button";
+import shopcart from "../shopcart/shopcart";
+
 export default {
   name: "goods",
   props: {
     seller: {}
   },
-  components:{
+  components: {
+    "v-button": button,
+    "shopcart": shopcart
   },
   data() {
     return {
@@ -61,19 +68,20 @@ export default {
           return i;
         }
       }
+    },
+    selectFoods(){
+      let foods = []
+      this.goods.forEach((item)=>{
+        item.foods.forEach((item)=>{
+          if(item.count){
+            foods.push(item)
+          }
+        })
+      })
+      return foods
     }
   },
   created() {
-    this.axios
-      .get("./static/data.json")
-      .then(res => {
-        this.goods = res.data.goods;
-        this.$nextTick(() => {
-          this._initScroll();
-          this._calculateHeight();
-        });
-      })
-      .catch(err => console.log(err));
     this.iconClassMap = [
       "decrease",
       "discount",
@@ -81,6 +89,17 @@ export default {
       "invoice",
       "guarantee"
     ];
+    this.axios
+      .get("./static/data.json")
+      .then(res => {
+        this.goods = res.data.goods;
+        this.$nextTick(function() {
+        this._initScroll();
+        this._calculateHeight();
+        });
+        
+      })
+      .catch(err => console.log(err));
   },
   methods: {
     _initScroll() {
@@ -212,6 +231,12 @@ export default {
           border-none();
         }
 
+        .good-button {
+          position: absolute;
+          right: 0;
+          bottom: 18px;
+        }
+
         .img {
           display: inline-block;
           vertical-align: top;
@@ -252,11 +277,18 @@ export default {
           }
 
           .price {
+            display: inline-block;
+
             .nowprice {
               font-size: 14px;
               color: #f01414;
               font-weight: 700;
               line-height: 28px;
+
+              i {
+                font-size: 10px;
+                font-weight: normal;
+              }
             }
 
             .oldprice {
