@@ -1,46 +1,52 @@
 <template>
-  <div id="goods">
-    <div class="menu-wrapper" ref="menuWrapper">
-      <ul>
-        <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}">
-          <span class="text border-1px">
-            <span v-if="item.type > 0" class="icon" :class="iconClassMap[item.type]"></span><span>{{ item.name }}</span>
-          </span>
-        </li>
-      </ul>
-    </div>
-    <div class="foods-wrapper" ref="foodsWrapper">
-      <ul>
-        <li v-for="item in goods" class="food-list" ref="foodlisthook">
-          <h1 class="goodsname">{{ item.name }}</h1>
-          <ul>
-            <li v-for="food in item.foods" class="food-item">
-              <div class="img"><img :src="food.icon" width="57" height="57"></div>
-              <div class="food-content">
-                <h2 class="name">{{ food.name }}</h2>
-                <span v-show="food.description" class="description">{{ food.description }}</span>
-                <div class="sellcontent">
-                  <span class="sellcount">月售{{ food.sellCount}}份</span>
-                  <span class="rating">好评率{{ food.rating }}%</span>
+  <div>
+    <div id="goods">
+      <div class="menu-wrapper" ref="menuWrapper">
+        <ul>
+          <li v-for="(item, index) in goods" class="menu-item" :class="{'current':currentIndex===index}" @click="getMenu(index)">
+            <span class="text border-1px">
+              <span v-if="item.type > 0" class="icon" :class="iconClassMap[item.type]"></span><span>{{ item.name }}</span>
+            </span>
+          </li>
+        </ul>
+      </div>
+      <div class="foods-wrapper" ref="foodsWrapper">
+        <ul>
+          <li v-for="item in goods" class="food-list" ref="foodlisthook">
+            <h1 class="goodsname">{{ item.name }}</h1>
+            <ul>
+              <li v-for="food in item.foods" class="food-item" @click="addFoodmsg(food,$event)">
+                <div class="img"><img :src="food.icon" width="57" height="57"></div>
+                <div class="food-content">
+                  <h2 class="name">{{ food.name }}</h2>
+                  <span v-show="food.description" class="description">{{ food.description }}</span>
+                  <div class="sellcontent">
+                    <span class="sellcount">月售{{ food.sellCount}}份</span>
+                    <span class="rating">好评率{{ food.rating }}%</span>
+                  </div>
+                  <div class="price">
+                    <span class="nowprice"><i>￥</i>{{ food.price }}</span>
+                    <span v-show=" food.oldPrice" class="oldprice">￥{{ food.oldPrice}}</span>
+                  </div>
                 </div>
-                <div class="price">
-                  <span class="nowprice"><i>￥</i>{{ food.price }}</span>
-                  <span v-show=" food.oldPrice" class="oldprice">￥{{ food.oldPrice}}</span>
+                <div class="good-button">
+                  <v-button :food="food"></v-button>
                 </div>
-              </div>
-              <v-button class="good-button" :food="food"></v-button>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <shopcart :selectFoods="selectFoods" :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice"></shopcart>
     </div>
-    <shopcart :selectFoods="selectFoods" :minPrice="seller.minPrice" :deliveryPrice="seller.deliveryPrice"></shopcart>
+    <v-food :food="selectedFood" ref="food"></v-food>
   </div>
 </template>
 <script>
 import BScroll from "better-scroll";
 import button from "../button/button";
 import shopcart from "../shopcart/shopcart";
+import food from "../food/food";
 
 export default {
   name: "goods",
@@ -49,7 +55,8 @@ export default {
   },
   components: {
     "v-button": button,
-    "shopcart": shopcart
+    "shopcart": shopcart,
+    "v-food": food
   },
   data() {
     return {
@@ -68,17 +75,18 @@ export default {
           return i;
         }
       }
+      return 0;
     },
-    selectFoods(){
-      let foods = []
-      this.goods.forEach((item)=>{
-        item.foods.forEach((item)=>{
-          if(item.count){
-            foods.push(item)
+    selectFoods() {
+      let foods = [];
+      this.goods.forEach(good => {
+        good.foods.forEach(food => {
+          if (food.count) {
+            foods.push(food);
           }
-        })
-      })
-      return foods
+        });
+      });
+      return foods;
     }
   },
   created() {
@@ -94,14 +102,19 @@ export default {
       .then(res => {
         this.goods = res.data.goods;
         this.$nextTick(function() {
-        this._initScroll();
-        this._calculateHeight();
+          this._initScroll();
+          this._calculateHeight();
         });
-        
       })
       .catch(err => console.log(err));
   },
   methods: {
+    getMenu(index) {
+      console.log(index);
+      let foodlist = this.$refs.foodlisthook;
+      let el = foodlist[index];
+      this.foodScroll.scrollToElement(el, 250);
+    },
     _initScroll() {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, { click: true });
       this.foodScroll = new BScroll(this.$refs.foodsWrapper, {
@@ -124,6 +137,13 @@ export default {
         height += item.clientHeight;
         this.listHeight.push(height);
       }
+    },
+    addFoodmsg(food,event){
+      if(!event._constructed){
+        return;
+      }
+      this.selectedFood = food
+      this.$refs.food.show()//通过设置ref找到子组件，并且调用food子组件内部的show方法
     }
   }
 };
