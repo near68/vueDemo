@@ -4,7 +4,7 @@
     <div class="tab border-1px">
       <div class="tab-item"><router-link to="/goods">菜单</router-link></div>
       <div class="tab-item"><router-link to="/ratings">评价</router-link></div>
-      <div class="tab-item"><router-link to="/detail">详细</router-link></div>
+      <div class="tab-item"><router-link to="/seller">详细</router-link></div>
     </div>
     <transition :name="transition">  
       <router-view class="child-view" :seller="seller"></router-view>  

@@ -29,7 +29,6 @@ export default {
       }
     },
     subCart(event) {
-      
       if (!event._constructed) {
         return;
       } else {
