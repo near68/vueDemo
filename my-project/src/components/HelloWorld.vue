@@ -1,5 +1,5 @@
 <template>
-    <h1>{{ msg }}</h1>
+    <router-link to="new"><h1>{{ msg }}</h1></router-link>
 </template>
 <script>
 export default {
